@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPIT435 Study From MCQs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .question {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .option {
+            margin-bottom: 8px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+        }
+        .explanation {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        #progress {
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        #restartBtn {
+            background-color: #e74c3c;
+        }
+        #restartBtn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>CPIT435 Study From MCQs</h1>
+    <div id="progress">Question 1 of 30</div>
+    
+    <div id="quizContainer"></div>
+    
+    <div id="navigation">
+        <button id="prevBtn" disabled>Previous</button>
+        <button id="nextBtn">Next</button>
+        <button id="submitBtn" style="display: none;">Submit</button>
+        <button id="restartBtn">Restart</button>
+    </div>
+    
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. Which of the following is NOT one of the processes in Project Resource Management?",
+                options: [
+                    "Planning resource management",
+                    "Estimating activity resources",
+                    "Validating scope",
+                    "Controlling resources"
+                ],
+                answer: 2,
+                explanation: "Validating scope is part of Project Scope Management, not Resource Management. The correct processes are: Planning resource management, Estimating activity resources, Acquiring resources, Developing the project team, Managing the project team, and Controlling resources."
+            },
+            {
+                question: "2. According to Thamhain and Wilemon, which of the following is the LEAST effective way to influence project team members?",
+                options: [
+                    "Work challenge",
+                    "Expertise",
+                    "Authority",
+                    "Friendship"
+                ],
+                answer: 2,
+                explanation: "Projects are more likely to fail when project managers rely too heavily on authority, money, or penalty. The most effective ways to influence are through work challenges and expertise."
+            },
+            {
+                question: "3. Which stage of Tuckman's team development model is characterized by team members having developed a common working method and cooperation?",
+                options: [
+                    "Forming",
+                    "Storming",
+                    "Norming",
+                    "Performing"
+                ],
+                answer: 2,
+                explanation: "The Norming stage is when team members have developed a common working method and cooperation. Forming is the introduction stage, Storming involves conflicts, and Performing focuses on goal achievement."
+            },
+            {
+                question: "4. What is the primary purpose of resource leveling in project management?",
+                options: [
+                    "To increase project costs while reducing duration",
+                    "To create a smoother distribution of resource usage",
+                    "To eliminate all resource conflicts immediately",
+                    "To reduce the total number of resources needed"
+                ],
+                answer: 1,
+                explanation: "Resource leveling is a technique for resolving resource conflicts by delaying tasks to create a smoother distribution of resource usage. It helps reduce problems for project personnel and improves morale."
+            },
+            {
+                question: "5. Which of the following is NOT one of Covey's seven habits of effective people?",
+                options: [
+                    "Begin with the end in mind",
+                    "Think win/win",
+                    "Sharpen the saw",
+                    "Micromanage when necessary"
+                ],
+                answer: 3,
+                explanation: "Micromanagement is not one of Covey's seven habits. The seven habits are: Be proactive, Begin with the end in mind, Put first things first, Think win/win, Seek first to understand then to be understood, Synergize (cooperation), and Sharpen the saw."
+            },
+            {
+                question: "6. What is the main purpose of a Responsibility Assignment Matrix (RAM)?",
+                options: [
+                    "To show the organizational hierarchy",
+                    "To map project work to responsible people",
+                    "To estimate activity durations",
+                    "To track project costs"
+                ],
+                answer: 1,
+                explanation: "A Responsibility Assignment Matrix (RAM) maps the work of the project (as described in the WBS) to the people responsible for performing the work (as described in the OBS)."
+            },
+            {
+                question: "7. Which type of cost is NOT directly related to the products or services of the project but is indirectly related to performing the project?",
+                options: [
+                    "Direct cost",
+                    "Indirect cost",
+                    "Tangible cost",
+                    "Sunk cost"
+                ],
+                answer: 1,
+                explanation: "Indirect costs are not directly related to the products or services of the project but are indirectly related to performing the project (e.g., electricity, paper towels). Project managers have little control over indirect costs."
+            },
+            {
+                question: "8. What is the primary purpose of a rough order of magnitude (ROM) estimate?",
+                options: [
+                    "To provide detailed cost breakdowns for purchases",
+                    "To allocate money into an organization's budget",
+                    "To provide an early estimate for selection decisions",
+                    "To track actual project costs"
+                ],
+                answer: 2,
+                explanation: "A rough order of magnitude (ROM) estimate is done very early in the project life cycle (often 3-5 years before completion) to provide an estimate of cost for selection decisions. It's less accurate than budgetary or definitive estimates."
+            },
+            {
+                question: "9. Which of the following is NOT one of the five levels of project portfolio management?",
+                options: [
+                    "Put all projects in one database",
+                    "Prioritize projects in the database",
+                    "Divide projects into budgets based on type",
+                    "Eliminate all risky projects"
+                ],
+                answer: 3,
+                explanation: "The five levels are: 1) Put all projects in one database, 2) Prioritize projects, 3) Divide projects into budgets based on type, 4) Apply modern portfolio theory including risk-return tools, and 5) Improve the system. Eliminating all risky projects is not recommended as some risk can lead to greater rewards."
+            },
+            {
+                question: "10. What does the learning curve theory state about production costs?",
+                options: [
+                    "Costs increase as more units are produced",
+                    "Unit costs decrease as more units are produced",
+                    "Costs remain constant regardless of production volume",
+                    "Only direct costs decrease with production volume"
+                ],
+                answer: 1,
+                explanation: "The learning curve theory states that when many items are produced repetitively, the unit cost of those items decreases in a regular pattern as more units are produced due to increased efficiency and experience."
+            },
+            {
+                question: "11. Which of the following is NOT one of the main processes in Project Time Management?",
+                options: [
+                    "Planning schedule management",
+                    "Defining activities",
+                    "Estimating activity resources",
+                    "Controlling scope"
+                ],
+                answer: 3,
+                explanation: "Controlling scope is part of Project Scope Management. The Project Time Management processes are: Planning schedule management, Defining activities, Sequencing activities, Estimating activity resources, Estimating activity durations, Developing the schedule, and Controlling the schedule."
+            },
+            {
+                question: "12. Which type of dependency is inherent in the nature of the work being performed on a project?",
+                options: [
+                    "Mandatory dependency",
+                    "Discretionary dependency",
+                    "External dependency",
+                    "Flexible dependency"
+                ],
+                answer: 0,
+                explanation: "Mandatory dependencies (also called hard logic) are inherent in the nature of the work being performed. Discretionary dependencies are defined by the project team, and external dependencies involve relationships with non-project activities."
+            },
+            {
+                question: "13. What is the critical path in a project schedule?",
+                options: [
+                    "The path with the most activities",
+                    "The path with all the critical activities",
+                    "The longest path with the least slack/float",
+                    "The path with the highest resource allocation"
+                ],
+                answer: 2,
+                explanation: "The critical path is the series of activities that determines the earliest time by which the project can be completed. It's the longest path in the network diagram and has the least amount of slack/float. It's not necessarily the path with the most activities or highest resource allocation."
+            },
+            {
+                question: "14. Which technique for shortening a project schedule involves doing activities in parallel?",
+                options: [
+                    "Crashing",
+                    "Fast tracking",
+                    "Leveling",
+                    "Buffering"
+                ],
+                answer: 1,
+                explanation: "Fast tracking involves doing activities in parallel or overlapping them to shorten the project schedule. Crashing involves adding resources to shorten duration, leveling balances resources, and buffering adds extra time."
+            },
+            {
+                question: "15. What is the main purpose of a project buffer in critical chain scheduling?",
+                options: [
+                    "To add extra time before the project's due date",
+                    "To reduce the number of resources needed",
+                    "To eliminate all project risks",
+                    "To decrease project costs"
+                ],
+                answer: 0,
+                explanation: "A project buffer is additional time added before the project's due date in critical chain scheduling to protect the project completion date from uncertainties. Feeding buffers are added before tasks on the critical path."
+            },
+            {
+                question: "16. Which of the following is NOT one of the main processes in Project Scope Management?",
+                options: [
+                    "Planning scope management",
+                    "Collecting requirements",
+                    "Creating the WBS",
+                    "Developing the project team"
+                ],
+                answer: 3,
+                explanation: "Developing the project team is part of Project Resource Management. The Project Scope Management processes are: Planning scope management, Collecting requirements, Defining scope, Creating the WBS, Validating scope, and Controlling scope."
+            },
+            {
+                question: "17. What is the primary purpose of a Work Breakdown Structure (WBS)?",
+                options: [
+                    "To define the total scope of the project",
+                    "To estimate project costs",
+                    "To assign team members to departments",
+                    "To track project schedule variances"
+                ],
+                answer: 0,
+                explanation: "A WBS is a deliverable-oriented grouping of the work involved in a project that defines the total scope of the project. It provides the basis for planning and managing project schedules, costs, resources, and changes."
+            },
+            {
+                question: "18. Which approach to developing a WBS starts with specific tasks and rolls them up?",
+                options: [
+                    "Top-down approach",
+                    "Bottom-up approach",
+                    "Analogy approach",
+                    "Mind-mapping approach"
+                ],
+                answer: 1,
+                explanation: "The bottom-up approach starts with the specific tasks and rolls them up into higher-level components. The top-down approach starts with the largest items, the analogy approach uses similar projects, and mind-mapping uses a visual diagram."
+            },
+            {
+                question: "19. What is the main purpose of scope validation?",
+                options: [
+                    "To formalize acceptance of project deliverables",
+                    "To estimate project costs",
+                    "To develop the project schedule",
+                    "To assign project resources"
+                ],
+                answer: 0,
+                explanation: "Scope validation involves formal acceptance of the completed project deliverables, often through customer inspection and sign-off on key deliverables. It's important for verifying project scope and minimizing scope changes."
+            },
+            {
+                question: "20. Which technique can help reduce incomplete and changing requirements?",
+                options: [
+                    "Using prototyping to get more user involvement",
+                    "Eliminating all requirements documentation",
+                    "Avoiding all communication with stakeholders",
+                    "Delaying testing until project completion"
+                ],
+                answer: 0,
+                explanation: "Prototyping can help get more user involvement and reduce incomplete/changing requirements. Other techniques include developing a requirements management process, creating a requirements database, providing adequate testing, and reviewing changes systematically."
+            },
+            {
+                question: "21. Which of the following is NOT one of the main processes in Project Integration Management?",
+                options: [
+                    "Developing the project charter",
+                    "Developing the project management plan",
+                    "Estimating activity durations",
+                    "Performing integrated change control"
+                ],
+                answer: 2,
+                explanation: "Estimating activity durations is part of Project Time Management. The Project Integration Management processes are: Developing the project charter, Developing the project management plan, Directing and managing project work, Monitoring and controlling project work, Performing integrated change control, and Closing the project or phase."
+            },
+            {
+                question: "22. What is the primary purpose of a project charter?",
+                options: [
+                    "To formally authorize a project",
+                    "To estimate project costs",
+                    "To assign specific tasks to team members",
+                    "To track project schedule variances"
+                ],
+                answer: 0,
+                explanation: "A project charter is a document that formally recognizes the existence of a project and provides direction on the project's objectives and management. Key stakeholders should sign it to acknowledge agreement on the project's need and intent."
+            },
+            {
+                question: "23. Which financial analysis method calculates the expected net monetary gain or loss from a project by discounting future cash flows?",
+                options: [
+                    "Net present value (NPV) analysis",
+                    "Return on investment (ROI)",
+                    "Payback analysis",
+                    "Earned value management (EVM)"
+                ],
+                answer: 0,
+                explanation: "Net present value (NPV) analysis discounts all expected future cash inflows and outflows to the present point in time. Positive NPV projects should be considered, with higher NPV being better. ROI calculates (benefits-costs)/costs, and payback analysis determines how long to recoup costs."
+            },
+            {
+                question: "24. What is the purpose of a weighted scoring model in project selection?",
+                options: [
+                    "To systematically evaluate projects based on multiple criteria",
+                    "To estimate project costs only",
+                    "To track project schedule performance",
+                    "To assign resources to project tasks"
+                ],
+                answer: 0,
+                explanation: "A weighted scoring model provides a systematic process for selecting projects based on many criteria. It involves identifying important criteria, assigning weights, scoring each criterion for projects, and calculating total weighted scores (higher is better)."
+            },
+            {
+                question: "25. What is the primary role of a Change Control Board (CCB)?",
+                options: [
+                    "To approve or reject changes on a project",
+                    "To perform all project work",
+                    "To estimate initial project costs",
+                    "To develop the project schedule"
+                ],
+                answer: 0,
+                explanation: "A Change Control Board (CCB) is a formal group responsible for approving or rejecting changes on a project. It includes stakeholders from the organization and provides guidelines for preparing, evaluating, and implementing change requests."
+            },
+            {
+                question: "26. Which of the following is NOT a key output of the closing process in Project Integration Management?",
+                options: [
+                    "Final product, service, or result transition",
+                    "Organizational process asset updates",
+                    "Initial project budget",
+                    "Closed contracts"
+                ],
+                answer: 2,
+                explanation: "The initial project budget is created during planning, not closing. Key outputs of closing include: Final product/service/result transition, organizational process asset updates, and closed contracts (if applicable)."
+            },
+            {
+                question: "27. What is the purpose of Earned Value Management (EVM)?",
+                options: [
+                    "To integrate scope, time, and cost data for performance measurement",
+                    "To develop the initial project schedule",
+                    "To assign resources to project tasks",
+                    "To create the project charter"
+                ],
+                answer: 0,
+                explanation: "Earned Value Management (EVM) is a project performance measurement technique that integrates scope, time, and cost data. It helps control project costs and determine how well the project is meeting its goals through metrics like PV, EV, and AC."
+            },
+            {
+                question: "28. If a project has a Cost Performance Index (CPI) less than 100%, what does this indicate?",
+                options: [
+                    "The project is under budget",
+                    "The project is over budget",
+                    "The project is ahead of schedule",
+                    "The project has no scope changes"
+                ],
+                answer: 1,
+                explanation: "A CPI less than 100% indicates the project is over budget (costing more than planned for the work performed). A Schedule Performance Index (SPI) less than 100% would indicate the project is behind schedule."
+            },
+            {
+                question: "29. Which of the following is NOT a type of dependency in project scheduling?",
+                options: [
+                    "Finish-to-start (FS)",
+                    "Start-to-start (SS)",
+                    "Finish-to-finish (FF)",
+                    "Budget-to-completion (BC)"
+                ],
+                answer: 3,
+                explanation: "Budget-to-completion is not a dependency type. The four types are: Finish-to-start (B can't start until A finishes), Start-to-start (B can't start until A starts), Finish-to-finish (B can't finish until A finishes), and Start-to-finish (B can't finish until A starts)."
+            },
+            {
+                question: "30. What is the main purpose of a requirements traceability matrix (RTM)?",
+                options: [
+                    "To ensure all requirements are addressed throughout the project",
+                    "To estimate project costs",
+                    "To assign team members to tasks",
+                    "To track project schedule variances"
+                ],
+                answer: 0,
+                explanation: "A requirements traceability matrix (RTM) lists requirements, their attributes, and status to ensure all requirements are addressed. It helps track requirements throughout the project lifecycle but isn't used for cost estimation, task assignment, or schedule tracking."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let score = 0;
+
+        // DOM elements
+        const quizContainer = document.getElementById('quizContainer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const resultDiv = document.getElementById('result');
+        const progressDiv = document.getElementById('progress');
+
+        // Display current question
+        function displayQuestion() {
+            progressDiv.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            
+            const q = questions[currentQuestion];
+            let html = `<div class="question">${q.question}</div><div class="options">`;
+            
+            q.options.forEach((option, index) => {
+                const checked = userAnswers[currentQuestion] === index ? 'checked' : '';
+                html += `
+                    <div class="option">
+                        <input type="radio" name="answer" id="option${index}" value="${index}" ${checked}>
+                        <label for="option${index}">${option}</label>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            quizContainer.innerHTML = html;
+            
+            // Update button states
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        // Save user's answer
+        function saveAnswer() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (selectedOption) {
+                userAnswers[currentQuestion] = parseInt(selectedOption.value);
+            }
+        }
+
+        // Show results
+        function showResults() {
+            saveAnswer();
+            
+            score = 0;
+            let resultsHtml = '<h2>Your Results</h2><ol>';
+            
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.answer;
+                
+                if (isCorrect) {
+                    score++;
+                }
+                
+                resultsHtml += `
+                    <li>
+                        <div class="${isCorrect ? 'correct' : 'incorrect'}">
+                            ${q.question}<br>
+                            Your answer: ${q.options[userAnswer] || 'Not answered'}<br>
+                            Correct answer: ${q.options[q.answer]}
+                        </div>
+                        <div class="explanation">Explanation: ${q.explanation}</div>
+                    </li>
+                `;
+            });
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            resultsHtml += `</ol><p>Your score: ${score} out of ${questions.length} (${percentage}%)</p>`;
+            
+            resultDiv.innerHTML = resultsHtml;
+            resultDiv.style.display = 'block';
+            
+            // Scroll to results
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion++;
+            displayQuestion();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            saveAnswer();
+            currentQuestion--;
+            displayQuestion();
+        });
+
+        submitBtn.addEventListener('click', showResults);
+
+        restartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            resultDiv.style.display = 'none';
+            displayQuestion();
+        });
+
+        // Initialize
+        displayQuestion();
+    </script>
+</body>
+</html>
